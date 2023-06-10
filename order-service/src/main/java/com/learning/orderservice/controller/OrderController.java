@@ -1,18 +1,25 @@
 package com.learning.orderservice.controller;
 
 import com.learning.orderservice.dto.OrderRequest;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.learning.orderservice.service.OrderServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/order")
 public class OrderController {
+    @Autowired
+    private final OrderServiceImpl orderService;
+    public OrderController(OrderServiceImpl orderService) {
+        this.orderService = orderService;
+    }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.OK)
     public String placeOrder(@RequestBody OrderRequest orderRequest){
-
-        return "Placed";
+         orderService.placeOrder(orderRequest);
+        return "Order place success full";
     }
+
 }

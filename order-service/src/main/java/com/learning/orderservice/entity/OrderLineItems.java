@@ -9,13 +9,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "orderLineItems")
+@Table(name = "order_line_items")
 public class OrderLineItems {
     @Id
+    @Column
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Column
     private String skuCode;
+    @Column
     private Long price;
+    @Column
     private Integer quantity;
+//    @Column
+//    @ManyToOne
+//    private Order order;
 
 }
