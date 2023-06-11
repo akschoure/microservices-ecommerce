@@ -1,11 +1,13 @@
 package com.learning.inventoryservice.Service;
 
 import com.learning.inventoryservice.dao.InventoryRepository;
+import com.learning.inventoryservice.dto.InventoryResponse;
 import com.learning.inventoryservice.entity.Inventory;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -20,8 +22,14 @@ public class InventoryServiceImpl implements InventoryService{
     }
 
     @Override
-    public Optional<Inventory> isInStock(String skuCode) {
+    public List<InventoryResponse> isInStock(List<String> skuCode) {
 
-        return  inventoryRepository.findInventoryBySkuCode(skuCode);
+        return  inventoryRepository.findBySkuCodeIn(skuCode).stream()
+                .map(inventory ->
+                    InventoryResponse.builder()
+                            .skuCode(inventory.getSkuCode())
+                            .isInStock(inventory.getQuantity()>0)
+                            .build()
+                ).toList();
     }
 }

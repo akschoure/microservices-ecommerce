@@ -2,11 +2,11 @@ package com.learning.inventoryservice.controller;
 
 import com.learning.inventoryservice.Service.InventoryService;
 import com.learning.inventoryservice.Service.InventoryServiceImpl;
+import com.learning.inventoryservice.dto.InventoryResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/inventory")
@@ -17,8 +17,8 @@ public class InventoryController {
         this.inventoryServiceImpl = inventoryServiceImpl;
     }
 
-    @GetMapping("/{sku-code}")
-    public boolean isInStock(@PathVariable(name = "sku-code") String skuCode){
-          return inventoryServiceImpl.isInStock(skuCode).isPresent();
+    @GetMapping
+    public List<InventoryResponse> isInStock(@RequestParam List<String> skuCodes){
+          return inventoryServiceImpl.isInStock(skuCodes);
     }
 }

@@ -3,11 +3,13 @@ package com.learning.orderservice.entity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Getter
 @Entity
 @Table(name = "order_line_items")
 public class OrderLineItems {
@@ -21,8 +23,6 @@ public class OrderLineItems {
     private Long price;
     @Column
     private Integer quantity;
-//    @Column
-//    @ManyToOne
-//    private Order order;
+
 
 }
