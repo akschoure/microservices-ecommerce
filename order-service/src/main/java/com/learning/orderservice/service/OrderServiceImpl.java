@@ -37,18 +37,20 @@ public class OrderServiceImpl implements OrderService{
 
         List<OrderLineItems> orderLineItems =orderRequest.getOrderLineItemsDtoList()
                 .stream()
+                //.map(orderLineItemsDto -> mapToDto(orderLineItemsDto)); or
                 .map(this::mapToDto)
                 .collect(Collectors.toList());
 
         order.setOrderLineItemsList(orderLineItems);
 
         List<String> skuCodes = order.getOrderLineItemsList().stream()
+                //OrderLineItems->OrderLineItems.getSkuCode()
                 .map(OrderLineItems::getSkuCode)
                 .toList();
 
         //call to inventory service to check inventory availability for order place
         InventoryResponse[] inventoryResponsesArray = webClient.get()
-                .uri("/api/inventory/",
+                .uri("http://localhost:8089/api/inventory/",
                         uriBuilder -> uriBuilder.queryParam("skuCodes",skuCodes).build())
                 .retrieve()
                 .bodyToMono(InventoryResponse[].class)

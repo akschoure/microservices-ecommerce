@@ -18,7 +18,7 @@ public class InventoryController {
     }
 
     @GetMapping
-    public List<InventoryResponse> isInStock(@RequestParam List<String> skuCodes){
+    public List<InventoryResponse> isInStock(@RequestParam (name ="skuCodes") List<String> skuCodes){
           return inventoryServiceImpl.isInStock(skuCodes);
     }
 }
